@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/** Subsystem B's own persistence gateway: seat assignments and waitlists, each in its own file. */
+ 
 public final class SeatRepository {
     private final TsvTable seats;
     private final TsvTable waitlists;
@@ -57,7 +57,7 @@ public final class SeatRepository {
         return all;
     }
 
-    /** Students waiting for a seat in this course, oldest first. */
+     
     public List<String> waitlist(String courseId) {
         List<String> queue = new ArrayList<>();
         for (String[] r : waitlists.readAll()) {

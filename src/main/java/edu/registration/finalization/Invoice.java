@@ -4,7 +4,7 @@ import edu.registration.finalization.FinalizationException.Reason;
 
 import java.math.BigDecimal;
 
-/** Subsystem C's billing entity. ISSUED -> PAID -> VOIDED, or ISSUED -> VOIDED. VOIDED is final. */
+ 
 public final class Invoice {
     public enum Status { ISSUED, PAID, VOIDED }
 

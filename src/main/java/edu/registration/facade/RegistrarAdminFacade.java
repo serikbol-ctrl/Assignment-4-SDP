@@ -6,11 +6,11 @@ import edu.registration.seating.SeatAllocator;
 
 import java.util.List;
 
-/**
- * The narrow administrative facade: inspect what is on disk, compensate a chain by hand,
- * and switch the billing gateway off or on to provoke a failure at step C.
- * It shares the persisted chain table with {@link EnrollmentFacade} but never runs the chain itself.
- */
+
+
+
+
+
 public final class RegistrarAdminFacade {
     private final EligibilityService eligibility;
     private final SeatAllocator seating;
@@ -31,12 +31,12 @@ public final class RegistrarAdminFacade {
         return chains.findAll();
     }
 
-    /** Chains that were cut short and wait for {@code EnrollmentFacade.resumeInterrupted()}. */
+     
     public List<ChainRecord> findInterrupted() {
         return chains.findInterrupted();
     }
 
-    /** Joins the chain row with the live state of the hold, seat, invoice and transcript entry it points at. */
+     
     public ChainReport inspect(String chainId) {
         ChainRecord c = chains.findById(chainId)
                 .orElseThrow(() -> new InvalidRequestException("Unknown chain " + chainId));
@@ -53,7 +53,7 @@ public final class RegistrarAdminFacade {
                 hold, seat, invoice, transcript);
     }
 
-    /** Manual compensation of an unfinished or completed chain. Returns the undone steps, in order. */
+     
     public List<String> compensate(String chainId) {
         ChainRecord c = chains.findById(chainId)
                 .orElseThrow(() -> new InvalidRequestException("Unknown chain " + chainId));

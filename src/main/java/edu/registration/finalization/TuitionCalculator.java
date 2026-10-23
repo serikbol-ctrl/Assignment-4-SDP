@@ -2,7 +2,7 @@ package edu.registration.finalization;
 
 import java.math.BigDecimal;
 
-/** Pure business rule: what does a course cost? Per-credit rate plus a flat registration fee. */
+ 
 public final class TuitionCalculator {
     private final BigDecimal ratePerCredit;
     private final BigDecimal registrationFee;

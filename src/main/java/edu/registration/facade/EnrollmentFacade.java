@@ -13,15 +13,15 @@ import edu.registration.seating.SeatingException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * The client-facing facade: one call, "enroll this student in this course", drives
- * A (eligibility hold) -> B (seat) -> C (invoice + transcript) and keeps the chain's progress
- * on disk after every step.
- *
- * If B fails, only A is undone. If C fails, B and then A are undone.
- * After a restart {@link #resumeInterrupted()} reads the persisted chain rows and either carries on
- * or finishes the undo, depending on what is actually on disk.
- */
+
+
+
+
+
+
+
+
+
 public final class EnrollmentFacade {
     private final EligibilityService eligibility;
     private final SeatAllocator seating;
@@ -38,16 +38,16 @@ public final class EnrollmentFacade {
         this.compensator = new ChainCompensator(eligibility, seating, finalization, chains);
     }
 
-    /**
-     * Enrolls the student. Throws {@link InvalidRequestException} for bad input (nothing is written) or
-     * {@link EnrollmentFailedException} if a step failed (everything already done has been undone).
-     */
+    
+
+
+
     public EnrollmentReceipt enroll(String studentId, String courseId) {
         ChainRecord chain = startChain(studentId, courseId);
         return drive(chain.id(), null);
     }
 
-    /** Withdraws a completed enrollment: invoice voided, transcript entry dropped, seat freed, hold revoked. */
+     
     public List<String> drop(String studentId, String courseId) {
         requireText(studentId, "studentId");
         requireText(courseId, "courseId");
@@ -56,11 +56,11 @@ public final class EnrollmentFacade {
         return compensator.compensate(chain.id(), ChainStatus.DROPPED);
     }
 
-    /**
-     * Picks up every chain that was cut short (by a crash, say) and finishes it:
-     * STARTED / PENDING_B / PENDING_C chains are driven forward, COMPENSATING chains finish their undo.
-     * Returns one human-readable line per chain.
-     */
+    
+
+
+
+
     public List<String> resumeInterrupted() {
         List<String> report = new ArrayList<>();
         for (ChainRecord chain : chains.findInterrupted()) {
@@ -80,11 +80,11 @@ public final class EnrollmentFacade {
         return report;
     }
 
-    /**
-     * Demo/test hook that simulates a crash: runs the chain only as far as {@code crashAt}
-     * (PENDING_B = after A, PENDING_C = after A and B) and stops, leaving the chain row on disk.
-     * Returns the chain id.
-     */
+    
+
+
+
+
     public String enrollAndCrashAt(String studentId, String courseId, ChainStatus crashAt) {
         if (crashAt != ChainStatus.PENDING_B && crashAt != ChainStatus.PENDING_C) {
             throw new InvalidRequestException("The crash point must be PENDING_B or PENDING_C");
@@ -94,7 +94,7 @@ public final class EnrollmentFacade {
         return chain.id();
     }
 
-    // ---------------------------------------------------------------- internals
+    
 
     private ChainRecord startChain(String studentId, String courseId) {
         requireText(studentId, "studentId");
@@ -107,12 +107,12 @@ public final class EnrollmentFacade {
         return chain;
     }
 
-    /** Runs whatever steps the persisted status says are still to do. Returns null only for a simulated crash. */
+     
     private EnrollmentReceipt drive(String chainId, ChainStatus crashAt) {
         ChainRecord chain = chains.findById(chainId)
                 .orElseThrow(() -> new InvalidRequestException("Unknown chain " + chainId));
 
-        if (chain.status() == ChainStatus.STARTED) {                       // ---- step A
+        if (chain.status() == ChainStatus.STARTED) {                       
             try {
                 EnrollmentHold hold = eligibility.requestAndApprove(chain.studentId(), chain.courseId());
                 chains.save(chain.holdId(hold.id()).status(ChainStatus.PENDING_B));
@@ -125,25 +125,25 @@ public final class EnrollmentFacade {
             return null;
         }
 
-        if (chain.status() == ChainStatus.PENDING_B) {                     // ---- step B
+        if (chain.status() == ChainStatus.PENDING_B) {                     
             try {
                 SeatAssignment seat = seating.reserve(chain.studentId(), chain.courseId());
                 chains.save(chain.seatId(seat.id()).status(ChainStatus.PENDING_C));
             } catch (SeatingException e) {
-                throw failAndCompensate(chain, "B", e);                    // undo A alone
+                throw failAndCompensate(chain, "B", e);                    
             }
         }
         if (crashAt == ChainStatus.PENDING_C) {
             return null;
         }
 
-        if (chain.status() == ChainStatus.PENDING_C) {                     // ---- step C
+        if (chain.status() == ChainStatus.PENDING_C) {                     
             try {
                 FinalizationService.Receipt receipt =
                         finalization.finalizeEnrollment(chain.studentId(), chain.courseId());
                 chains.save(chain.invoiceId(receipt.invoice().id()).entryId(receipt.entry().id()));
             } catch (FinalizationException e) {
-                throw failAndCompensate(chain, "C", e);                    // undo B, then A
+                throw failAndCompensate(chain, "C", e);                    
             }
             seating.confirm(chain.seatId());
             chains.save(chain.status(ChainStatus.COMPLETED));

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Subsystem C on its own: no facade, no eligibility, no seating. CS201 is 4 credits: 4 * 150 + 20 = 620. */
+ 
 class FinalizationTest {
     @TempDir
     Path dir;

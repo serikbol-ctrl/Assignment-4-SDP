@@ -8,13 +8,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-/**
- * Subsystem A (intake): decides whether a student may take a course and records that decision
- * as a durable {@link EnrollmentHold}. Usable on its own, it knows nothing about subsystems B and C.
- * Both operations are idempotent, so a restarted chain can safely call them again.
- */
+
+
+
+
+
 public final class EligibilityService {
-    /** Reference data about a student, looked up by id. */
+     
     public record StudentProfile(Set<String> completedCourses, BigDecimal outstandingBalance) { }
 
     private final PrerequisiteChecker prerequisites;
@@ -30,7 +30,7 @@ public final class EligibilityService {
         this.students = students;
     }
 
-    /** Checks the rules and persists an APPROVED hold. Returns the existing hold if one is already active. */
+     
     public EnrollmentHold requestAndApprove(String studentId, String courseId) {
         Optional<EnrollmentHold> existing = holds.findActive(studentId, courseId);
         if (existing.isPresent()) {
@@ -58,13 +58,13 @@ public final class EligibilityService {
                     studentId + " has a financial hold (balance " + profile.outstandingBalance() + ")");
         }
         EnrollmentHold hold = EnrollmentHold.pending(holds.nextId(), studentId, courseId);
-        holds.save(hold);          // PENDING is on disk first ...
+        holds.save(hold);          
         hold.approve();
-        holds.save(hold);          // ... then APPROVED
+        holds.save(hold);          
         return hold;
     }
 
-    /** Undo: revokes the hold. Does nothing if it is already revoked. */
+     
     public EnrollmentHold revoke(String holdId) {
         EnrollmentHold hold = require(holdId);
         if (hold.status() != EnrollmentHold.Status.REVOKED) {

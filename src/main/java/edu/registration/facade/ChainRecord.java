@@ -1,10 +1,10 @@
 package edu.registration.facade;
 
-/**
- * One row of the chain table: who is enrolling in what, how far the chain got, and the ids of
- * everything the three subsystems have produced so far. The ids that are present decide how deep
- * a compensation has to go.
- */
+
+
+
+
+
 public final class ChainRecord {
     private final String id;
     private final String studentId;

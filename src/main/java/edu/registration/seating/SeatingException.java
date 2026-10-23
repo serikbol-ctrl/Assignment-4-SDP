@@ -1,6 +1,6 @@
 package edu.registration.seating;
 
-/** Every failure raised by subsystem B. For SECTION_FULL the waitlist position is filled in. */
+ 
 public class SeatingException extends RuntimeException {
     public enum Reason { SECTION_FULL, UNKNOWN_COURSE, SEAT_NOT_FOUND, ILLEGAL_TRANSITION }
 
@@ -19,6 +19,6 @@ public class SeatingException extends RuntimeException {
 
     public Reason reason() { return reason; }
 
-    /** 1-based position on the waitlist, or 0 if the failure has nothing to do with the waitlist. */
+     
     public int waitlistPosition() { return waitlistPosition; }
 }

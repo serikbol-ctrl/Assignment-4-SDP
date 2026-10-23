@@ -13,17 +13,17 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * A tiny domain-specific testing language, so a test reads like a sentence about a university:
- *
- *   uni.student("S001").enrollsIn("CS201");
- *   uni.billingGatewayGoesDown();
- *   EnrollmentFailedException failure = uni.student("S005").failsToEnrollIn("MATH101");
- *   uni.expectSeat("S005", "MATH101", SeatAssignment.Status.RELEASED);
- *   uni.restarts();
- *
- * Every test builds its own university in its own temporary directory, so tests never share state.
- */
+
+
+
+
+
+
+
+
+
+
+
 final class UniversityDsl {
     private final Path dataDir;
     private RegistrarSystem system;
@@ -37,7 +37,7 @@ final class UniversityDsl {
         return new UniversityDsl(dataDir);
     }
 
-    /** Simulates stopping and starting the application: new objects, same files on disk. */
+     
     UniversityDsl restarts() {
         system = RegistrarSystem.open(dataDir);
         return this;
@@ -72,7 +72,7 @@ final class UniversityDsl {
             return system.enrollment().enroll(id, course);
         }
 
-        /** Enrolls and expects the chain to break; returns the failure for further assertions. */
+         
         EnrollmentFailedException failsToEnrollIn(String course) {
             try {
                 system.enrollment().enroll(id, course);
@@ -86,13 +86,13 @@ final class UniversityDsl {
             return system.enrollment().drop(id, course);
         }
 
-        /** Starts enrolling but "crashes" after the given step. Returns the chain id left on disk. */
+         
         String isInterruptedWhileEnrollingIn(String course, ChainStatus crashAt) {
             return system.enrollment().enrollAndCrashAt(id, course, crashAt);
         }
     }
 
-    // ---------------------------------------------------------------- expectations (read from disk)
+    
 
     void expectHold(String student, String course, EnrollmentHold.Status expected) {
         assertEquals(Optional.of(expected),

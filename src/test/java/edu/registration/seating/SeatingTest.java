@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Subsystem B on its own: no facade, no eligibility, no billing. CS201 has exactly one seat. */
+ 
 class SeatingTest {
     @TempDir
     Path dir;

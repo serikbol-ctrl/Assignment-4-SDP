@@ -2,11 +2,11 @@ package edu.registration.eligibility;
 
 import edu.registration.eligibility.EligibilityException.Reason;
 
-/**
- * Subsystem A's entity: a hold that says "this student is allowed to take this course".
- * It polices its own life cycle: PENDING -> APPROVED -> REVOKED (or PENDING -> REVOKED).
- * REVOKED is final.
- */
+
+
+
+
+
 public final class EnrollmentHold {
     public enum Status { PENDING, APPROVED, REVOKED }
 

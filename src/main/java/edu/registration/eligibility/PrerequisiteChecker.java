@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
-/** Pure business rule: which prerequisite courses is a student still missing? No state, no I/O. */
+ 
 public final class PrerequisiteChecker {
     private final Map<String, Set<String>> prerequisitesByCourse;
 

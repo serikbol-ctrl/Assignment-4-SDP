@@ -2,10 +2,10 @@ package edu.registration.seating;
 
 import edu.registration.seating.SeatingException.Reason;
 
-/**
- * Subsystem B's entity: one student's seat in one course section.
- * RESERVED -> CONFIRMED -> RELEASED (or RESERVED -> RELEASED). RELEASED is final.
- */
+
+
+
+
 public final class SeatAssignment {
     public enum Status { RESERVED, CONFIRMED, RELEASED }
 
@@ -30,7 +30,7 @@ public final class SeatAssignment {
     public String courseId() { return courseId; }
     public Status status() { return status; }
 
-    /** A seat that still occupies room in the section. */
+     
     public boolean isActive() {
         return status != Status.RELEASED;
     }

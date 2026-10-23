@@ -10,14 +10,14 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A tiny durable table: one tab-separated file, one row per line.
- * Every write goes to a temp file first and is then moved over the real file,
- * so a crash in the middle of a write never leaves a half-written table behind.
- * The first column of a row is treated as its key (see {@link #upsert}).
- *
- * This is infrastructure only: each subsystem owns its own file and its own repository class.
- */
+
+
+
+
+
+
+
+
 public final class TsvTable {
     private static final String NULL_MARKER = "\\N";
     private final Path file;
@@ -81,7 +81,7 @@ public final class TsvTable {
         }
     }
 
-    /** Replaces the row with the same first column, or appends the row if there is none. */
+     
     public void upsert(String[] row) {
         List<String[]> rows = readAll();
         for (int i = 0; i < rows.size(); i++) {

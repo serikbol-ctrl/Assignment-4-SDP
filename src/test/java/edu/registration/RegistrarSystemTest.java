@@ -38,6 +38,6 @@ class RegistrarSystemTest {
         assertEquals("S001", system.eligibility().requestAndApprove("S001", "CS101").studentId());
         assertEquals("S001", system.seating().reserve("S001", "CS101").studentId());
         assertEquals("S001", system.finalization().finalizeEnrollment("S001", "CS101").invoice().studentId());
-        assertTrue(system.chains().findAll().isEmpty());                    // the facade was never involved
+        assertTrue(system.chains().findAll().isEmpty());                    
     }
 }

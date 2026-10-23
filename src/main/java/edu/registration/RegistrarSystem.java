@@ -21,11 +21,11 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/**
- * Composition root: the only place that knows all three subsystems and wires them to the facades.
- * Opening a system over an existing data directory is exactly what "restarting the application" means:
- * all objects are new, all state comes back from disk.
- */
+
+
+
+
+
 public final class RegistrarSystem {
     private final EligibilityService eligibility;
     private final SeatAllocator seating;
@@ -66,7 +66,7 @@ public final class RegistrarSystem {
         return new RegistrarSystem(eligibility, seating, finalization, new ChainRepository(dataDir));
     }
 
-    /** Deletes every table file in the data directory (a clean slate for a fresh run). */
+     
     public static void reset(Path dataDir) {
         if (!Files.isDirectory(dataDir)) {
             return;
@@ -83,7 +83,7 @@ public final class RegistrarSystem {
     public EnrollmentFacade enrollment() { return enrollment; }
     public RegistrarAdminFacade admin() { return admin; }
 
-    // Direct access to the subsystems: for standalone use and for tests. Clients use the facades.
+    
     public EligibilityService eligibility() { return eligibility; }
     public SeatAllocator seating() { return seating; }
     public FinalizationService finalization() { return finalization; }

@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Subsystem B (processing): hands out, confirms and releases seats. Usable on its own, it knows
- * nothing about subsystems A and C. When a section is full the student is put on the waitlist
- * and a {@link SeatingException} with reason SECTION_FULL is thrown; no seat is created.
- * All operations are idempotent.
- */
+
+
+
+
+
+
 public final class SeatAllocator {
     private final Map<String, Integer> capacities;
     private final SeatPolicy policy;
@@ -55,7 +55,7 @@ public final class SeatAllocator {
         return seat;
     }
 
-    /** Undo: frees the seat. Does nothing if it is already released. */
+     
     public SeatAssignment release(String seatId) {
         SeatAssignment seat = require(seatId);
         if (seat.status() != SeatAssignment.Status.RELEASED) {

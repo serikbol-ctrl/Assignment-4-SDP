@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/** Subsystem A's own persistence gateway. Nobody outside package eligibility touches its file. */
+ 
 public final class HoldRepository {
     private final TsvTable table;
 
@@ -27,14 +27,14 @@ public final class HoldRepository {
         return findAll().stream().filter(h -> h.id().equals(id)).findFirst();
     }
 
-    /** A hold that has not been revoked yet. */
+     
     public Optional<EnrollmentHold> findActive(String studentId, String courseId) {
         return findAll().stream()
                 .filter(h -> h.studentId().equals(studentId) && h.courseId().equals(courseId) && h.isActive())
                 .findFirst();
     }
 
-    /** The most recently created hold for this pair, active or not. */
+     
     public Optional<EnrollmentHold> findLatest(String studentId, String courseId) {
         EnrollmentHold latest = null;
         for (EnrollmentHold h : findAll()) {

@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Set;
 
-/** Reference data the three subsystems are configured with. Everything the app *produces* lives on disk. */
+ 
 public record DemoCatalog(Map<String, StudentProfile> students,
                           Map<String, Set<String>> prerequisites,
                           Map<String, Integer> capacities,
@@ -18,11 +18,11 @@ public record DemoCatalog(Map<String, StudentProfile> students,
     public static DemoCatalog standard() {
         return new DemoCatalog(
                 Map.of(
-                        "S001", new StudentProfile(Set.of("CS101"), BigDecimal.ZERO),                     // Alice
-                        "S002", new StudentProfile(Set.of(), BigDecimal.ZERO),                            // Bob: no prerequisites
-                        "S003", new StudentProfile(Set.of("CS101"), new BigDecimal("750")),               // Carol: owes money
-                        "S004", new StudentProfile(Set.of("CS101"), BigDecimal.ZERO),                     // Dan
-                        "S005", new StudentProfile(Set.of("CS101", "CS201"), BigDecimal.ZERO)),           // Eve
+                        "S001", new StudentProfile(Set.of("CS101"), BigDecimal.ZERO),                     
+                        "S002", new StudentProfile(Set.of(), BigDecimal.ZERO),                            
+                        "S003", new StudentProfile(Set.of("CS101"), new BigDecimal("750")),               
+                        "S004", new StudentProfile(Set.of("CS101"), BigDecimal.ZERO),                     
+                        "S005", new StudentProfile(Set.of("CS101", "CS201"), BigDecimal.ZERO)),           
                 Map.of(
                         "CS101", Set.of(),
                         "CS201", Set.of("CS101"),

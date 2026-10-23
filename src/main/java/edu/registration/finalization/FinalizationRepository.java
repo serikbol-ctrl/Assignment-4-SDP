@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/** Subsystem C's own persistence gateway: invoices and transcript entries, each in its own file. */
+ 
 public final class FinalizationRepository {
     private final TsvTable invoices;
     private final TsvTable transcript;

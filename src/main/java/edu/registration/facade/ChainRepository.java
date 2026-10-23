@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-/** Persists the progress of every chain. This is the facade's own table, separate from A, B and C. */
+ 
 public final class ChainRepository {
     private final TsvTable table;
 

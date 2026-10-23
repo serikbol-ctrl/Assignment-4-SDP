@@ -2,7 +2,7 @@ package edu.registration.eligibility;
 
 import java.math.BigDecimal;
 
-/** Pure business rule: an unpaid balance above the threshold blocks registration. */
+ 
 public final class FinancialHoldChecker {
     private final BigDecimal threshold;
 

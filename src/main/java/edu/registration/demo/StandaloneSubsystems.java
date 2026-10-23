@@ -21,10 +21,10 @@ import edu.registration.seating.WaitlistManager;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-/**
- * Shows that A, B and C each work completely on their own, with no facade and no other subsystem.
- * Run: mvn -q compile exec:java -Dexec.mainClass=edu.registration.demo.StandaloneSubsystems
- */
+
+
+
+
 public final class StandaloneSubsystems {
     public static void main(String[] args) throws Exception {
         Path dir = Files.createTempDirectory("standalone-demo");

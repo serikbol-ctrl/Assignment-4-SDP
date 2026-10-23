@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** Subsystem A on its own: no facade, no seating, no billing. */
+ 
 class EligibilityTest {
     @TempDir
     Path dir;
@@ -40,7 +40,7 @@ class EligibilityTest {
         return assertThrows(EligibilityException.class, action::run).reason();
     }
 
-    // ---- business rules -------------------------------------------------
+    
 
     @Test
     void anEligibleStudentGetsAnApprovedHoldThatSurvivesARestart() {
@@ -113,7 +113,7 @@ class EligibilityTest {
         assertTrue(service.latestFor("S001", "CS201").isEmpty());
     }
 
-    // ---- pure rule classes ----------------------------------------------
+    
 
     @Test
     void prerequisiteCheckerListsExactlyWhatIsMissing() {
@@ -133,7 +133,7 @@ class EligibilityTest {
         assertTrue(checker.hasHold(new BigDecimal("500.01")));
     }
 
-    // ---- the hold polices its own life cycle -----------------------------
+    
 
     @Test
     void aHoldMayBeApprovedThenRevoked() {

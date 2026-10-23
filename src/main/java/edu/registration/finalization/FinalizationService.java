@@ -5,14 +5,14 @@ import edu.registration.finalization.FinalizationException.Reason;
 import java.util.Map;
 import java.util.Optional;
 
-/**
- * Subsystem C (finalization): bills the student and writes the course onto the transcript.
- * Usable on its own, it knows nothing about subsystems A and B.
- * The payment gateway can be switched off; while it is off nothing at all is written.
- * {@link #finalizeEnrollment} and {@link #cancel} are idempotent.
- */
+
+
+
+
+
+
 public final class FinalizationService {
-    /** What a successful finalization produced. */
+     
     public record Receipt(Invoice invoice, TranscriptEntry entry) { }
 
     private final Map<String, Integer> courseCredits;
@@ -55,7 +55,7 @@ public final class FinalizationService {
         return new Receipt(invoice, entry);
     }
 
-    /** Undo: voids the invoice and drops the transcript entry. Ids may be null; finished work is skipped. */
+     
     public void cancel(String invoiceId, String entryId) {
         if (invoiceId != null) {
             Invoice invoice = repository.findInvoice(invoiceId)

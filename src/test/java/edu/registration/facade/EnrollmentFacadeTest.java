@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** The happy path, the three failure kinds, and both compensation depths. */
+ 
 class EnrollmentFacadeTest {
     @TempDir
     Path dir;
@@ -33,7 +33,7 @@ class EnrollmentFacadeTest {
         uni = UniversityDsl.aFreshUniversityIn(dir);
     }
 
-    // ------------------------------------------------------------------ happy path
+    
 
     @Test
     void aSuccessfulEnrollmentRunsAllThreeStepsAndLeavesEverythingOnDisk() {
@@ -55,7 +55,7 @@ class EnrollmentFacadeTest {
         assertEquals(1, uni.system().chains().findAll().size());
     }
 
-    // ------------------------------------------------------------------ failure at the very first step
+    
 
     @Test
     void aMissingPrerequisiteIsRejectedAtAAndNothingWasCommittedSoNothingIsUndone() {
@@ -95,11 +95,11 @@ class EnrollmentFacadeTest {
         assertTrue(uni.system().chains().findAll().isEmpty());
     }
 
-    // ------------------------------------------------------------------ compensation depth 1: B fails after A
+    
 
     @Test
     void whenBFailsAfterAHasCommittedOnlyAIsCompensated() {
-        uni.student("S001").enrollsIn("CS201");                             // takes the only seat
+        uni.student("S001").enrollsIn("CS201");                             
 
         EnrollmentFailedException failure = uni.student("S004").failsToEnrollIn("CS201");
 
@@ -108,9 +108,9 @@ class EnrollmentFacadeTest {
         assertEquals(ChainStatus.COMPENSATED, failure.finalStatus());
         assertTrue(failure.getCause() instanceof SeatingException);
 
-        uni.expectHold("S004", "CS201", EnrollmentHold.Status.REVOKED);     // A was committed, now undone
-        uni.expectNoSeat("S004", "CS201");                                  // B never committed
-        uni.expectNoInvoice("S004", "CS201");                               // C never ran
+        uni.expectHold("S004", "CS201", EnrollmentHold.Status.REVOKED);     
+        uni.expectNoSeat("S004", "CS201");                                  
+        uni.expectNoInvoice("S004", "CS201");                               
         uni.expectNoTranscriptEntry("S004", "CS201");
         uni.expectChain(failure.chainId(), ChainStatus.COMPENSATED);
         assertEquals(List.of("S004"), uni.system().admin().waitlistOf("CS201"));
@@ -126,7 +126,7 @@ class EnrollmentFacadeTest {
         uni.expectInvoice("S001", "CS201", Invoice.Status.ISSUED);
     }
 
-    // ------------------------------------------------------------------ compensation depth 2: C fails after A and B
+    
 
     @Test
     void whenCFailsAfterAAndBHaveCommittedBIsUndoneThenA() {
@@ -135,13 +135,13 @@ class EnrollmentFacadeTest {
         EnrollmentFailedException failure = uni.student("S005").failsToEnrollIn("MATH101");
 
         assertEquals("C", failure.failedStep());
-        assertEquals(List.of("B", "A"), failure.compensatedSteps());        // exactly this order
+        assertEquals(List.of("B", "A"), failure.compensatedSteps());        
         assertEquals(ChainStatus.COMPENSATED, failure.finalStatus());
         assertTrue(failure.getCause() instanceof FinalizationException);
 
         uni.expectHold("S005", "MATH101", EnrollmentHold.Status.REVOKED);
         uni.expectSeat("S005", "MATH101", SeatAssignment.Status.RELEASED);
-        uni.expectNoInvoice("S005", "MATH101");                             // C never committed
+        uni.expectNoInvoice("S005", "MATH101");                             
         uni.expectNoTranscriptEntry("S005", "MATH101");
         uni.expectChain(failure.chainId(), ChainStatus.COMPENSATED);
         assertEquals(30, uni.system().admin().remainingSeats("MATH101"));
@@ -150,7 +150,7 @@ class EnrollmentFacadeTest {
     @Test
     void aSeatReleasedByCompensationCanBeTakenByAnotherStudentOnceBillingIsBack() {
         uni.billingGatewayGoesDown();
-        uni.student("S001").failsToEnrollIn("CS201");                       // the only CS201 seat is held, then freed
+        uni.student("S001").failsToEnrollIn("CS201");                       
         uni.billingGatewayComesBack();
 
         EnrollmentReceipt receipt = uni.student("S004").enrollsIn("CS201");
@@ -172,7 +172,7 @@ class EnrollmentFacadeTest {
         assertEquals(2, uni.system().chains().findAll().size());
     }
 
-    // ------------------------------------------------------------------ dropping
+    
 
     @Test
     void droppingUndoesAllThreeStepsInReverseOrder() {
@@ -207,7 +207,7 @@ class EnrollmentFacadeTest {
         assertFalse(again.holdId().equals("H-1"));
     }
 
-    // ------------------------------------------------------------------ the crash hook itself
+    
 
     @Test
     void theCrashHookOnlyAcceptsPendingBOrPendingC() {

@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/** The narrow administrative facade: inspection, manual compensation, fault injection. */
+ 
 class AdminFacadeTest {
     @TempDir
     Path dir;

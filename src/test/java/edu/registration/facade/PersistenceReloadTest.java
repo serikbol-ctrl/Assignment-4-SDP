@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * "Restart" = open a brand-new RegistrarSystem over the same directory. Nothing from the old objects
- * survives; the facade has to work out what to do from the rows on disk.
- */
+
+
+
+
 class PersistenceReloadTest {
     @TempDir
     Path dir;
@@ -64,8 +64,8 @@ class PersistenceReloadTest {
 
         uni.restarts();
 
-        uni.expectHold("S001", "CS201", EnrollmentHold.Status.APPROVED);    // what A did is on disk
-        uni.expectNoSeat("S001", "CS201");                                  // B had not started
+        uni.expectHold("S001", "CS201", EnrollmentHold.Status.APPROVED);    
+        uni.expectNoSeat("S001", "CS201");                                  
         assertEquals(1, uni.system().admin().findInterrupted().size());
 
         List<String> report = uni.system().enrollment().resumeInterrupted();
@@ -151,7 +151,7 @@ class PersistenceReloadTest {
     void anUndoThatWasHalfDoneIsCompletedWithoutRepeatingTheFinishedPart() {
         EnrollmentHold hold = uni.system().eligibility().requestAndApprove("S001", "CS201");
         SeatAssignment seat = uni.system().seating().reserve("S001", "CS201");
-        uni.system().seating().release(seat.id());                          // B was already undone before the crash
+        uni.system().seating().release(seat.id());                          
         uni.system().chains().save(new ChainRecord("C-1", "S001", "CS201", ChainStatus.COMPENSATING,
                 hold.id(), seat.id(), null, null, null));
 

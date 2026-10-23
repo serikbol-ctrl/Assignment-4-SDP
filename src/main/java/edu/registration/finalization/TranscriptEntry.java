@@ -2,7 +2,7 @@ package edu.registration.finalization;
 
 import edu.registration.finalization.FinalizationException.Reason;
 
-/** Subsystem C's transcript entity. ENROLLED -> COMPLETED or ENROLLED -> DROPPED. Both are final. */
+ 
 public final class TranscriptEntry {
     public enum Status { ENROLLED, DROPPED, COMPLETED }
 

@@ -13,10 +13,10 @@ import java.nio.file.Path;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Console demo on top of the two facades. It never touches a subsystem directly.
- * Data directory: -Dregistrar.data=... (default ./data).
- */
+
+
+
+
 public final class RegistrarCli {
     private final Path dataDir;
     private final Scanner in;

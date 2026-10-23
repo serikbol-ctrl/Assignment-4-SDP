@@ -1,6 +1,6 @@
 package edu.registration.facade;
 
-/** A read-only snapshot for inspection: the chain row plus the live state of what each subsystem holds. */
+ 
 public record ChainReport(String chainId, String studentId, String courseId, ChainStatus chainStatus,
                           String note, String hold, String seat, String invoice, String transcript) {
 
